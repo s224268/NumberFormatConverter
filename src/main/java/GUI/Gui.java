@@ -5,6 +5,7 @@ import THINKYBITS.MathMachine;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.nio.charset.Charset;
 import java.util.Objects;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -13,12 +14,10 @@ public class Gui extends JFrame{
     protected JTextField jhexNumber;
     private JTextField jbinaryNumber;
     private JTextField jdecimalNumber;
-    private JFrame hexConverter;
-    private String hexNumber;
-    private String intNumber;
-    private String binaryNumber;
-    private JLabel label;
-    private CustomKeyListener customkeyListener;
+
+    final char[] allowedChars = {'a','b','c','d','e','f'};
+    final String allowedCharsString = "abcdef";
+
 
     MathMachine mathMachine = new MathMachine();
 
@@ -44,7 +43,7 @@ public class Gui extends JFrame{
     }
 
 
-    public void gui(){
+    public  void gui(){
         //this.smtp = smtp;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
@@ -64,10 +63,10 @@ public class Gui extends JFrame{
         label.setBounds((WIDTH-BOXWIDTH)/2, 20, BOXWIDTH, BOXHEIGHT);
 
         jdecimalNumber.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
+            public synchronized void focusGained(FocusEvent e) {
                 jdecimalNumber.addKeyListener(DecimalKeyListener.getInstance());
             }
-            public void focusLost(FocusEvent e) {
+            public synchronized void focusLost(FocusEvent e) {
                 System.out.println("Focus off decimal");
             }
         });
@@ -88,31 +87,26 @@ public class Gui extends JFrame{
             }
         });
 
-
-        //this.add(label);
         this.add(jhexNumber);
         this.add(jbinaryNumber);
         this.add(jdecimalNumber);
         this.setLayout(null);
         this.setVisible(true);
-
     }
 
-
-
-    private void sendRequest() {
-        System.out.println("This shouldnt do something");
-    }
-/*
-    protected void updateFromDecimal() {
+    protected void updateFromDecimal(char c) {
         String text = jdecimalNumber.getText();
+        c = Character.toUpperCase(c);
+        if (Character.isDigit(c)) {
+            text = text + c;
+        }
         if (!Objects.equals(text, "")){
-            String binary = mathMachine.getBinaryFromIntString(text);
-            String hex = mathMachine.getHexFromIntString(text);
+            long value = Long.parseLong(text);
+            String hex = Long.toHexString(value);
+            hex = hex.toUpperCase();
+            String binary = Long.toBinaryString(value);
             jhexNumber.setText(hex);
             jbinaryNumber.setText(binary);
-            System.out.println(hex);
-            System.out.println(binary);
         }
         else {
             System.out.println("Value is null");
@@ -120,18 +114,29 @@ public class Gui extends JFrame{
             jbinaryNumber.setText("");
         }
     }
-
- */
-
-    protected void updateFromBinary() {
+    protected void updateFromBinary(char c){
         String text = jbinaryNumber.getText();
+        c = Character.toUpperCase(c);
+        jbinaryNumber.setForeground(new Color(0,0,0));
+        if (c == '0' || c == '1') {
+            text = text + c;
+            jbinaryNumber.setForeground(new Color(0,0,0));
+            //jbinaryNumber.setForeground(new Color(255,0,0));
+
+        }
+        else if (c == 8){
+            jbinaryNumber.setForeground(new Color(0,0,0));
+        }
+        else {
+            jbinaryNumber.setForeground(new Color(255,0,0));
+        }
         if (!Objects.equals(text, "")){
-            int value = Integer.parseInt(text,2);
-            String valueString = Integer.toString(value);
+            long value = Long.parseLong(text,2);
+            String valueString = Long.toString(value);
             String hex = mathMachine.getHexFromIntString(text);
+            hex = hex.toUpperCase();
             jhexNumber.setText(hex);
             jdecimalNumber.setText(valueString);
-            System.out.println("Im dying");
         }
         else {
             System.out.println("String is null");
@@ -140,15 +145,19 @@ public class Gui extends JFrame{
         }
 
     }
-
-    protected void updateFromHex() {
+    protected void updateFromHex(char c) {
         String text = jhexNumber.getText();
+        c = Character.toUpperCase(c);
+        if (('A' == c || 'B' == c || 'C' == c || 'D' == c || 'E' == c || 'F' == c || Character.isDigit(c))) {
+            text = text + c;
+            text = text.toUpperCase();
+        }
         if (!Objects.equals(text, "")){
-            int value = Integer.parseInt(text,16);
+            long value = Long.parseLong(text,16);
             System.out.println("Hex value is: " + value);
-            String binary = Integer.toString(value,2);
+            String binary = Long.toString(value,2);
             System.out.println("Hex value as binary is: " + binary);
-            jdecimalNumber.setText(Integer.toString(value));
+            jdecimalNumber.setText(Long.toString(value));
             jbinaryNumber.setText(binary);
         }
         else{
@@ -159,40 +168,21 @@ public class Gui extends JFrame{
 
     }
 
-/*
-    public void onFocus(JTextField textField){
-        textField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
-                if (textField.getText().equals("Mail fra: ")) {
-                    textField.setText("");
-                }
-            }
-            public void focusLost(FocusEvent e) {
-                if (textField.getText().isEmpty()) {
-                    textField.setText("Mail fra: ");
-                }
-            }
-        });
-    }*/
-
 
 }
 class HexKeyListener implements KeyListener {
     private static HexKeyListener hexKeyListener;
-
     @Override //These arent needed they just kinda need to be here
-    public void keyPressed(KeyEvent e) {
-        Gui gui = Gui.getInstance();
-        System.out.println("Hex has been pressed");
-        System.out.println("Active threads: " + Thread.activeCount());
-        gui.updateFromHex();
-        System.out.println("Current thread: " + Thread.currentThread());
-
-    }
+    public void keyPressed(KeyEvent e) {}
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
     public void keyTyped(KeyEvent e){
+        Gui gui = Gui.getInstance();
+        char c = e.getKeyChar();
+        System.out.println("Keychar " + c);
+        System.out.println(gui.jhexNumber.getText());
+        System.out.println("Hex has been pressed");
+        gui.updateFromHex(c);
     }
 
 
@@ -210,6 +200,7 @@ class DecimalKeyListener implements KeyListener {
 
     public void keyTyped(KeyEvent e) {
         System.out.println("Decimal has been pressed");
+        gui.updateFromDecimal(e.getKeyChar());
     }
 
     @Override //These arent needed they just kinda need to be here
@@ -235,7 +226,7 @@ class BinaryKeyListener implements KeyListener {
 
     public void keyTyped(KeyEvent e){
         System.out.println("Binary has been pressed");
-        gui.updateFromBinary();
+        gui.updateFromBinary(e.getKeyChar());
     }
 
     @Override //These arent needed they just kinda need to be here

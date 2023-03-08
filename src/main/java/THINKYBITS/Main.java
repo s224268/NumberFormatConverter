@@ -6,7 +6,7 @@ public class Main {
         run();
     }
 
-    public static void run(){
+    public static synchronized void run(){
         Gui gui = Gui.getInstance();
         gui.gui();
     }
