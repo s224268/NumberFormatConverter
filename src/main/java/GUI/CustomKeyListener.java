@@ -8,7 +8,6 @@ class CustomKeyListener implements KeyListener {
         public void keyTyped(KeyEvent e){
             System.out.println("key has been pressed");
         }
-
         @Override //These arent needed they just kinda need to be here
         public void keyPressed(KeyEvent e) {
         }

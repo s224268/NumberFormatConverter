@@ -5,6 +5,7 @@ import THINKYBITS.MathMachine;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.util.Objects;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -14,10 +15,6 @@ public class Gui extends JFrame{
     protected JTextField jhexNumber;
     private JTextField jbinaryNumber;
     private JTextField jdecimalNumber;
-
-    final char[] allowedChars = {'a','b','c','d','e','f'};
-    final String allowedCharsString = "abcdef";
-
 
     MathMachine mathMachine = new MathMachine();
 
@@ -48,7 +45,7 @@ public class Gui extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Anto's converter");
-        this.setResizable(false);
+        this.setResizable(true);
 
         jhexNumber = new JTextField("F");
         jhexNumber.setBounds((WIDTH-BOXWIDTH)/2-4,(12+BOXHEIGHT)*1, BOXWIDTH, BOXHEIGHT);
@@ -101,10 +98,13 @@ public class Gui extends JFrame{
             text = text + c;
         }
         if (!Objects.equals(text, "")){
-            long value = Long.parseLong(text);
-            String hex = Long.toHexString(value);
+            BigInteger value = new BigInteger(text);
+            //long value = Long.parseLong(text);
+            String hex = value.toString(16);
+            //String hex = Long.toHexString(value);
             hex = hex.toUpperCase();
-            String binary = Long.toBinaryString(value);
+            String binary = value.toString(2);
+            //String binary = Long.toBinaryString(value);
             jhexNumber.setText(hex);
             jbinaryNumber.setText(binary);
         }
@@ -131,9 +131,12 @@ public class Gui extends JFrame{
             jbinaryNumber.setForeground(new Color(255,0,0));
         }
         if (!Objects.equals(text, "")){
-            long value = Long.parseLong(text,2);
-            String valueString = Long.toString(value);
-            String hex = mathMachine.getHexFromIntString(text);
+            BigInteger value = new BigInteger(text,2);
+            //long value = Long.parseLong(text,2);
+            String valueString = value.toString(10);
+            //String valueString = Long.toString(value);
+            String hex = value.toString(16);
+            //String hex = mathMachine.getHexFromIntString(text);
             hex = hex.toUpperCase();
             jhexNumber.setText(hex);
             jdecimalNumber.setText(valueString);
@@ -153,11 +156,13 @@ public class Gui extends JFrame{
             text = text.toUpperCase();
         }
         if (!Objects.equals(text, "")){
-            long value = Long.parseLong(text,16);
+            BigInteger value = new BigInteger(text,16);
+            //long value = Long.parseLong(text,16);
             System.out.println("Hex value is: " + value);
-            String binary = Long.toString(value,2);
-            System.out.println("Hex value as binary is: " + binary);
-            jdecimalNumber.setText(Long.toString(value));
+            String binary = value.toString(2);
+            //String binary = Long.toString(value,2);
+            String decimalvalue = value.toString(10);
+            jdecimalNumber.setText(decimalvalue);
             jbinaryNumber.setText(binary);
         }
         else{
@@ -218,6 +223,10 @@ class DecimalKeyListener implements KeyListener {
 
         }
         return decimalKeyListener;
+    }
+
+    protected void numberTooLong(){
+        BigInteger bigInteger = new BigInteger("213123123123123123123");
     }
 }
 class BinaryKeyListener implements KeyListener {
