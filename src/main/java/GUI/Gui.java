@@ -1,22 +1,21 @@
 package GUI;
 
-import THINKYBITS.MathMachine;
+import Listeners.BinaryKeyListener;
+import Listeners.DecimalKeyListener;
+import Listeners.HexKeyListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.util.Objects;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class Gui extends JFrame{
 
-    protected JTextField jhexNumber;
+    public JTextField jhexNumber;
     private JTextField jbinaryNumber;
     private JTextField jdecimalNumber;
 
-    MathMachine mathMachine = new MathMachine();
 
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -91,7 +90,7 @@ public class Gui extends JFrame{
         this.setVisible(true);
     }
 
-    protected void updateFromDecimal(char c) {
+    public void updateFromDecimal(char c) {
         String text = jdecimalNumber.getText();
         c = Character.toUpperCase(c);
         if (Character.isDigit(c)) {
@@ -114,7 +113,7 @@ public class Gui extends JFrame{
             jbinaryNumber.setText("");
         }
     }
-    protected void updateFromBinary(char c){
+    public void updateFromBinary(char c){
         String text = jbinaryNumber.getText();
         c = Character.toUpperCase(c);
         jbinaryNumber.setForeground(new Color(0,0,0));
@@ -148,7 +147,7 @@ public class Gui extends JFrame{
         }
 
     }
-    protected void updateFromHex(char c) {
+    public void updateFromHex(char c) {
         String text = jhexNumber.getText();
         c = Character.toUpperCase(c);
         if (('A' == c || 'B' == c || 'C' == c || 'D' == c || 'E' == c || 'F' == c || Character.isDigit(c))) {
@@ -174,83 +173,4 @@ public class Gui extends JFrame{
     }
 
 
-}
-class HexKeyListener implements KeyListener {
-    private static HexKeyListener hexKeyListener;
-    @Override //These arent needed they just kinda need to be here
-    public void keyPressed(KeyEvent e) {}
-    @Override
-    public void keyReleased(KeyEvent e) {}
-    public void keyTyped(KeyEvent e){
-        Gui gui = Gui.getInstance();
-        char c = e.getKeyChar();
-        System.out.println("Keychar " + c);
-        System.out.println(gui.jhexNumber.getText());
-        System.out.println("Hex has been pressed");
-        gui.updateFromHex(c);
-    }
-
-
-    public static HexKeyListener getInstance(){
-        if (hexKeyListener == null){
-            hexKeyListener = new HexKeyListener();
-
-        }
-        return hexKeyListener;
-    }
-}
-class DecimalKeyListener implements KeyListener {
-    Gui gui = Gui.getInstance();
-    private static DecimalKeyListener decimalKeyListener;
-
-    public void keyTyped(KeyEvent e) {
-        System.out.println("Decimal has been pressed");
-        gui.updateFromDecimal(e.getKeyChar());
-    }
-
-    @Override //These arent needed they just kinda need to be here
-    public void keyPressed(KeyEvent e) {
-    }
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-        }
-
-
-    public static DecimalKeyListener getInstance(){
-        if (decimalKeyListener == null){
-            decimalKeyListener = new DecimalKeyListener();
-
-        }
-        return decimalKeyListener;
-    }
-
-    protected void numberTooLong(){
-        BigInteger bigInteger = new BigInteger("213123123123123123123");
-    }
-}
-class BinaryKeyListener implements KeyListener {
-    Gui gui = Gui.getInstance();
-    private static BinaryKeyListener binaryKeyListener;
-
-    public void keyTyped(KeyEvent e){
-        System.out.println("Binary has been pressed");
-        gui.updateFromBinary(e.getKeyChar());
-    }
-
-    @Override //These arent needed they just kinda need to be here
-    public void keyPressed(KeyEvent e) {
-    }
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-
-
-    public static BinaryKeyListener getInstance(){
-        if (binaryKeyListener == null){
-            binaryKeyListener = new BinaryKeyListener();
-
-        }
-        return binaryKeyListener;
-    }
 }

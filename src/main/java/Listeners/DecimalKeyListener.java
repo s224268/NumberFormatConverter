@@ -1,0 +1,39 @@
+package Listeners;
+
+import GUI.Gui;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.math.BigInteger;
+
+public class DecimalKeyListener implements KeyListener {
+    Gui gui = Gui.getInstance();
+    private static DecimalKeyListener decimalKeyListener;
+
+    public void keyTyped(KeyEvent e) {
+        System.out.println("Decimal has been pressed");
+        gui.updateFromDecimal(e.getKeyChar());
+    }
+
+    @Override //These arent needed they just kinda need to be here
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+
+    public static DecimalKeyListener getInstance() {
+        if (decimalKeyListener == null) {
+            decimalKeyListener = new DecimalKeyListener();
+
+        }
+        return decimalKeyListener;
+    }
+
+    protected void numberTooLong() {
+        BigInteger bigInteger = new BigInteger("213123123123123123123");
+    }
+}
