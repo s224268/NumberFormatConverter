@@ -90,6 +90,30 @@ public class Gui extends JFrame{
         this.setVisible(true);
     }
 
+    public String getJhexNumber() {
+        return jhexNumber.getText();
+    }
+
+    public void setJhexNumber(String text) {
+        jhexNumber.setText(text);
+    }
+
+    public String getJbinaryNumber() {
+        return jbinaryNumber.getText();
+    }
+
+    public void setJbinaryNumber(String text) {
+        jbinaryNumber.setText(text);
+    }
+
+    public String getJdecimalNumber() {
+        return jdecimalNumber.getText();
+    }
+
+    public void setJdecimalNumber(String text) {
+        jdecimalNumber.setText(text);
+    }
+
     public void updateFromDecimal(char c) {
         String text = jdecimalNumber.getText();
         c = Character.toUpperCase(c);
@@ -171,6 +195,8 @@ public class Gui extends JFrame{
         }
 
     }
+
+
 
 
 }

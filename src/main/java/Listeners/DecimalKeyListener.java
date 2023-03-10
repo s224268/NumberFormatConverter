@@ -1,10 +1,7 @@
 package Listeners;
-
 import GUI.Gui;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.math.BigInteger;
 
 public class DecimalKeyListener implements KeyListener {
     Gui gui = Gui.getInstance();
@@ -31,9 +28,5 @@ public class DecimalKeyListener implements KeyListener {
 
         }
         return decimalKeyListener;
-    }
-
-    protected void numberTooLong() {
-        BigInteger bigInteger = new BigInteger("213123123123123123123");
     }
 }
