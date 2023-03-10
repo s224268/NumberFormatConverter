@@ -19,7 +19,7 @@ public class HexKeyListener implements KeyListener {
         Gui gui = Gui.getInstance();
         char c = e.getKeyChar();
         System.out.println("Keychar " + c);
-        System.out.println(gui.jhexNumber.getText());
+        System.out.println("Entire hex " + gui.getJhexNumber());
         System.out.println("Hex has been pressed");
         gui.updateFromHex(c);
     }
