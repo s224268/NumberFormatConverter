@@ -23,10 +23,14 @@ public class Gui extends JFrame{
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private int WIDTH = (int) (screenSize.getWidth()*0.3);
-    private int HEIGHT = (int) (screenSize.getHeight()*0.4);
-    private int BOXHEIGHT = (int) ((screenSize.getHeight())*0.05);
-    private int BOXWIDTH = (int) (WIDTH*0.8);
+    private int WIDTH = round(screenSize.getWidth()*0.3,12);
+    private int HEIGHT = round(screenSize.getHeight()*0.4,12);
+    private int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
+    private int BOXWIDTH = round(WIDTH*0.8,12);
+
+    int round(double value, int nearest) {
+        return (int) Math.round(value / nearest) * nearest;
+    }
 
 
 

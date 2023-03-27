@@ -15,7 +15,7 @@ public class DataFormatConverter {
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
         for (int i = 0; i<text.length();i++){
-            if (!isdigit(tempArray[i], 10)){
+            if (isNotDigit(tempArray[i], 10)){
                 foundMistake = true;
                 break;
             }
@@ -47,7 +47,7 @@ public class DataFormatConverter {
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
         for (int i = 0; i<text.length();i++){
-            if (!isdigit(tempArray[i], 2)){
+            if (isNotDigit(tempArray[i], 2)){
                 foundMistake = true;
                 break;
             }
@@ -79,7 +79,7 @@ public class DataFormatConverter {
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
         for (int i = 0; i<text.length();i++){
-            if (!isdigit(tempArray[i], 16)){
+            if (isNotDigit(tempArray[i], 16)){
                 foundMistake = true;
                 break;
             }
@@ -106,7 +106,7 @@ public class DataFormatConverter {
     }
 
 
-    public static boolean isdigit(char c, int radix){
+    public static boolean isNotDigit(char c, int radix){
         char[] charset = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
         String cString = Character.toString(c);
         if (radix == 64){
@@ -114,22 +114,22 @@ public class DataFormatConverter {
             try {
                 Base64.getDecoder().decode(j);
                 System.out.println("Char c is valid for base64");
-                return true;
+                return false;
             }
             catch (Exception e){
                 System.out.println("Not a base 64 number");
-                return false;
+                return true;
             }
         }
         else{
             for (int i = 1;i<=radix;i++){
                 if (charset[i-1] == c){
                     System.out.println("Char c (" + c + ") is within radix");
-                    return true;
+                    return false;
                 }
             }
             System.out.println("Char c " + c + "is not within radix");
-            return false;
+            return true;
         }
     }
 }
