@@ -8,8 +8,6 @@ public class BinaryKeyListener implements KeyListener {
     private static BinaryKeyListener binaryKeyListener;
 
     public void keyTyped(KeyEvent e) {
-        System.out.println("Binary has been pressed");
-        gui.updateFromBinary(e.getKeyChar());
     }
 
     @Override //These arent needed they just kinda need to be here
@@ -17,6 +15,8 @@ public class BinaryKeyListener implements KeyListener {
     }
     @Override
     public void keyReleased(KeyEvent e) {
+        System.out.println("Binary has been pressed");
+        gui.updateFromBinary(e.getKeyChar());
     }
 
 

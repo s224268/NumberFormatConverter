@@ -8,8 +8,6 @@ public class DecimalKeyListener implements KeyListener {
     private static DecimalKeyListener decimalKeyListener;
 
     public void keyTyped(KeyEvent e) {
-        System.out.println("Decimal has been pressed");
-        gui.updateFromDecimal(e.getKeyChar());
     }
 
     @Override //These arent needed they just kinda need to be here
@@ -18,7 +16,8 @@ public class DecimalKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        System.out.println("Decimal has been pressed");
+        gui.updateFromDecimal(e.getKeyChar());
     }
 
 
