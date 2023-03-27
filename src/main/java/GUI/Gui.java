@@ -24,17 +24,14 @@ public class Gui extends JFrame{
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 
-    private int WIDTH = round(screenSize.getWidth()*0.3,12);
-    private int HEIGHT = round(screenSize.getHeight()*0.4,12);
+    private int WIDTH = round(screenSize.getWidth()*0.2,12);
+    private int HEIGHT = round(400,12);
     private int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
     private int BOXWIDTH = round(WIDTH*0.8,12);
 
     int round(double value, int nearest) {
         return (int) Math.round(value / nearest) * nearest;
     }
-
-
-
 
 
     private static Gui gui;
@@ -51,7 +48,7 @@ public class Gui extends JFrame{
     public void gui(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
-        this.setTitle("Anto's converter");
+        this.setTitle("Anto's number format converter");
         this.setResizable(true);
 
         jHexNumber = new JTextArea("F");
@@ -70,9 +67,7 @@ public class Gui extends JFrame{
         JLabel binaryLabel = new JLabel("Binary value");
         JLabel decimalLabel = new JLabel("Decimal value");
 
-        JLabel supportMe = new JLabel("<html><a href='paypal.me/AntonHelsgaun'>Buy me a cup of coffee on PayPal</a></html>");
-
-
+        JLabel supportMe = new JLabel("<html><a href='https://www.paypal.com/donate/?hosted_button_id=TRJXNGCDENSYL'>Donate to me on PayPal</a></html>");
 
 
         jDecimalNumber.addFocusListener(new FocusListener() {
@@ -104,7 +99,7 @@ public class Gui extends JFrame{
             public void mouseClicked(MouseEvent e) {
                 // Open the hyperlink in the user's default web browser
                 try {
-                    Desktop.getDesktop().browse(new URI("https://www.paypal.me/AntonHelsgaun"));
+                    Desktop.getDesktop().browse(new URI("https://www.paypal.com/donate/?hosted_button_id=TRJXNGCDENSYL"));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -120,8 +115,7 @@ public class Gui extends JFrame{
             }
         });
 
-
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        JPanel panel = new JPanel(new FlowLayout());
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -153,7 +147,7 @@ public class Gui extends JFrame{
 
 
         ;
-        this.setMinimumSize(new Dimension(250,210));
+        this.setMinimumSize(new Dimension(250,220));
 
         this.add(panel);
         this.setVisible(true);
