@@ -28,7 +28,7 @@ public class DataFormatConverter {
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,10);
                 String binary = value.toString(2);
-                String hexValue = value.toString(16);
+                String hexValue = value.toString(16).toUpperCase();
                 gui.setJHexNumber(hexValue);
                 gui.setJHexNumber(Color.black);
                 gui.setJBinaryNumber(binary);
@@ -59,7 +59,7 @@ public class DataFormatConverter {
             gui.setJBinaryNumber(Color.black);
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,2);
-                String hexValue = value.toString(16);
+                String hexValue = value.toString(16).toUpperCase();
                 String decimalValue = value.toString(10);
                 gui.setJDecimalNumber(decimalValue);
                 gui.setJDecimalNumber(Color.black);
@@ -132,5 +132,4 @@ public class DataFormatConverter {
             return false;
         }
     }
-
 }
