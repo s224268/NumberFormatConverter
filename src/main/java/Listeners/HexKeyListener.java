@@ -13,15 +13,16 @@ public class HexKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-    }
-
-    public void keyTyped(KeyEvent e) {
         Gui gui = Gui.getInstance();
         char c = e.getKeyChar();
         System.out.println("Keychar " + c);
         System.out.println("Entire hex " + gui.getJhexNumber());
         System.out.println("Hex has been pressed");
         gui.updateFromHex(c);
+    }
+
+    public void keyTyped(KeyEvent e) {
+
     }
 
 

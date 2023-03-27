@@ -203,14 +203,14 @@ public class Gui extends JFrame{
     }
 
     public void updateFromDecimal(char c) {
-        dataFormatConverter.updateFromDecimal(c);
+        dataFormatConverter.updateFromDecimal();
         }
 
     public void updateFromBinary(char c){
-        DataFormatConverter.updateFromBinary(c);
+        DataFormatConverter.updateFromBinary();
     }
     public void updateFromHex(char c) {
-        dataFormatConverter.updateFromHex(c);
+        DataFormatConverter.updateFromHex();
     }
 
     public void setJhexNumber(Color color){

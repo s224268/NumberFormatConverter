@@ -9,177 +9,105 @@ public class DataFormatConverter {
 
     static Gui gui = Gui.getInstance();
 
-    static int firstInvalidHexCharacterPosition = Integer.MAX_VALUE;
-    static int firstInvalidBinaryCharacterPosition = Integer.MAX_VALUE;
-    static int firstInvalidDecimalCharacterPosition = Integer.MAX_VALUE;
-
-    public void updateFromDecimal(char c){
+    public void updateFromDecimal(){
         String text = gui.getJdecimalNumber();
+        text = text.toUpperCase();
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
         for (int i = 0; i<text.length();i++){
-            if (!isdigit(tempArray[i],10)){
+            if (!isdigit(tempArray[i], 10)){
                 foundMistake = true;
+                break;
             }
         }
         if (foundMistake){
             gui.setJdecimalNumber(Color.red);
         }
-        if (isdigit(c,10)) {
-            text = text + c;
-        }
-        if (!Objects.equals(text, "")){
-            BigInteger value = new BigInteger(text);
-            String hex = value.toString(16);
-            hex = hex.toUpperCase();
-            String binary = value.toString(2);
-            gui.setJhexNumber(hex);
-            gui.setJbinaryNumber(binary);
-        }
-        else {
-            System.out.println("Value is null");
-            gui.setJbinaryNumber("");
-            gui.setJhexNumber("");
+        else{
+            gui.setJdecimalNumber(Color.black);
+            if (!Objects.equals(text, "")){
+                BigInteger value = new BigInteger(text,10);
+                String binary = value.toString(2);
+                String hexValue = value.toString(16);
+                gui.setJhexNumber(hexValue);
+                gui.setJhexNumber(Color.black);
+                gui.setJbinaryNumber(binary);
+                gui.setJbinaryNumber(Color.black);
+            }
+            else {
+                gui.setJdecimalNumber("");
+                gui.setJbinaryNumber("");
+            }
         }
     }
+    public static void updateFromBinary() {
 
-    public static void updateFromBinary(char c) {
         String text = gui.getJbinaryNumber();
+        text = text.toUpperCase();
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
         for (int i = 0; i<text.length();i++){
-            foundMistake = !isdigit(tempArray[i], 2);
+            if (!isdigit(tempArray[i], 2)){
+                foundMistake = true;
+                break;
+            }
         }
         if (foundMistake){
             gui.setJbinaryNumber(Color.red);
         }
         else{
             gui.setJbinaryNumber(Color.black);
-        }
-
-        //if (text.length() < firstInvalidBinaryCharacterPosition){
-            //gui.setJbinaryNumber(Color.black);
-            //gui.setJhexNumber(Color.black);
-            //gui.setJdecimalNumber(Color.black);
-        //}
-        c = Character.toUpperCase(c);
-        if (isdigit(c,2)) {
-            text = text + c;
-            text = text.toUpperCase();
-        }
-        else if (!(c == 8 || c == 127)) {
-            gui.setJbinaryNumber(Color.red);
-            if (firstInvalidBinaryCharacterPosition == Integer.MAX_VALUE){
-                firstInvalidBinaryCharacterPosition = text.length();
-            }
-            System.out.println("firstInvalidCharacterPosition: " + firstInvalidBinaryCharacterPosition);
-        }
-        if (!Objects.equals(text, "")){
-            try {
+            if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,2);
-                System.out.println("Hex value is: " + value);
-                String hex = value.toString(16);
+                String hexValue = value.toString(16);
                 String decimalValue = value.toString(10);
                 gui.setJdecimalNumber(decimalValue);
-                gui.setJhexNumber(hex);
+                gui.setJdecimalNumber(Color.black);
+                gui.setJhexNumber(hexValue);
+                gui.setJhexNumber(Color.black);
             }
-            catch (NumberFormatException e){
-                System.out.println("NumberFormatException caught");
+            else {
+                System.out.println("String is null?");
+                gui.setJdecimalNumber("");
+                gui.setJhexNumber("");
             }
         }
-        else{
-            System.out.println("String is null?");
-            gui.setJdecimalNumber("");
-            gui.setJhexNumber("");
-        }
-        /*
-
-        if (c == 8 || c == 127) {
-            text = gui.getJbinaryNumber();
-            gui.setJbinaryNumber(Color.black);
-        } else if (isdigit(c, 2)) {
-            text = text + c;
-            gui.setJbinaryNumber(Color.black);
-        } else {
-            gui.setJbinaryNumber(Color.red);
-        }
-        if (!Objects.equals(text, "")) {
-            try {
-                BigInteger value = new BigInteger(text, 2);
-                String valueString = value.toString(10);
-                String hex = value.toString(16);
-                hex = hex.toUpperCase();
-                gui.setJhexNumber(hex);
-                gui.setJdecimalNumber(valueString);
-            }
-            catch (NumberFormatException e){
-                System.out.println("NumberFormatException, not updating other fields");
-            }
-        } else {
-            System.out.println("String is null");
-            gui.setJdecimalNumber("");
-            gui.setJhexNumber("");
-        }
-        /*
-        if (text.length() > 40) {
-            gui.setJbinaryNumberWidth(10 * text.length());
-            gui.setJHexNumberWidth(10 * text.length());
-            gui.setJDecimalNumberWidth(10 * text.length());
-            gui.setLayout(null);
-            gui.setSize(500,text.length()*10+70);
-            gui.setLayout(null);
-            gui.setVisible(true);
-        }
-
-         */
     }
-    public static void updateFromHex(char c){
+    public static void updateFromHex(){
         String text = gui.getJhexNumber();
-        if (text.length() < firstInvalidHexCharacterPosition){
-            gui.setJhexNumber(Color.black);
-            gui.setJbinaryNumber(Color.black);
-            gui.setJdecimalNumber(Color.black);
+        text = text.toUpperCase();
+        boolean foundMistake = false;
+        char[] tempArray = text.toCharArray();
+        for (int i = 0; i<text.length();i++){
+            if (!isdigit(tempArray[i], 16)){
+                foundMistake = true;
+                break;
+            }
         }
-        c = Character.toUpperCase(c);
-        //I dont understand this
-        if (isdigit(c,16)) {
-            text = text + c;
-            text = text.toUpperCase();
-        }
-        else if (!(c == 8 || c == 127)) {
+        if (foundMistake){
             gui.setJhexNumber(Color.red);
-            if (firstInvalidHexCharacterPosition == Integer.MAX_VALUE){
-                firstInvalidHexCharacterPosition = text.length();
-            }
-            System.out.println("firstInvalidCharacterPosition: " + firstInvalidHexCharacterPosition);
-        }
-        if (!Objects.equals(text, "")){
-            try {
-                BigInteger value = null;
-                value = new BigInteger(text,16);
-                System.out.println("Hex value is: " + value);
-                String binary = null;
-                String decimalValue = null;
-                binary = value.toString(2);
-                decimalValue = value.toString(10);
-                gui.setJdecimalNumber(decimalValue);
-                gui.setJbinaryNumber(binary);
-            }
-            catch (NumberFormatException e){
-                System.out.println("NumberFormatException caught");
-            }
         }
         else{
-            System.out.println("String is null?");
-            gui.setJdecimalNumber("");
-            gui.setJbinaryNumber("");
+            gui.setJhexNumber(Color.black);
+            if (!Objects.equals(text, "")){
+                BigInteger value = new BigInteger(text,16);
+                String binary = value.toString(2);
+                String decimalValue = value.toString(10);
+                gui.setJdecimalNumber(decimalValue);
+                gui.setJdecimalNumber(Color.black);
+                gui.setJbinaryNumber(binary);
+                gui.setJbinaryNumber(Color.black);
+            }
+            else {
+                gui.setJdecimalNumber("");
+                gui.setJbinaryNumber("");
+            }
         }
     }
 
 
     public static boolean isdigit(char c, int radix){
         char[] charset = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-        String hexset = "0123456789ABCDEF";
         String cString = Character.toString(c);
         if (radix == 64){
             String j = "k" + cString;
@@ -200,7 +128,7 @@ public class DataFormatConverter {
                     return true;
                 }
             }
-            System.out.println("Char c is not within radix");
+            System.out.println("Char c " + c + "is not within radix");
             return false;
         }
     }

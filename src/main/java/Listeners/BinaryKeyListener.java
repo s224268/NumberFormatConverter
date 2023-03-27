@@ -15,7 +15,6 @@ public class BinaryKeyListener implements KeyListener {
     @Override //These arent needed they just kinda need to be here
     public void keyPressed(KeyEvent e) {
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
     }
