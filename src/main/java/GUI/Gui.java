@@ -13,9 +13,9 @@ public class Gui extends JFrame{
 
     DataFormatConverter dataFormatConverter = new DataFormatConverter();
 
-    private static JTextArea jhexNumber;
-    private static JTextArea jbinaryNumber;
-    private static JTextArea jdecimalNumber;
+    private static JTextArea jHexNumber;
+    private static JTextArea jBinaryNumber;
+    private static JTextArea jDecimalNumber;
 
 
 
@@ -42,26 +42,25 @@ public class Gui extends JFrame{
 
 
     public void gui(){
-        //this.smtp = smtp;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Anto's converter");
         this.setResizable(true);
 
-        jhexNumber = new JTextArea("F");
-        jhexNumber.setLineWrap(true);
-        jhexNumber.setWrapStyleWord(true);
-        jhexNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
+        jHexNumber = new JTextArea("F");
+        jHexNumber.setLineWrap(true);
+        jHexNumber.setWrapStyleWord(true);
+        jHexNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
 
-        jbinaryNumber = new JTextArea("1111");
-        jbinaryNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
-        jbinaryNumber.setLineWrap(true);
-        jbinaryNumber.setWrapStyleWord(true);
+        jBinaryNumber = new JTextArea("1111");
+        jBinaryNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
+        jBinaryNumber.setLineWrap(true);
+        jBinaryNumber.setWrapStyleWord(true);
 
-        jdecimalNumber = new JTextArea("15");
-        jdecimalNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
-        jdecimalNumber.setLineWrap(true);
-        jdecimalNumber.setWrapStyleWord(true);
+        jDecimalNumber = new JTextArea("15");
+        jDecimalNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
+        jDecimalNumber.setLineWrap(true);
+        jDecimalNumber.setWrapStyleWord(true);
 
         JLabel hexLabel = new JLabel("Hex value");
         JLabel binaryLabel = new JLabel("Binary value");
@@ -74,25 +73,25 @@ public class Gui extends JFrame{
 
 
 
-        jdecimalNumber.addFocusListener(new FocusListener() {
+        jDecimalNumber.addFocusListener(new FocusListener() {
             public synchronized void focusGained(FocusEvent e) {
-                jdecimalNumber.addKeyListener(DecimalKeyListener.getInstance());
+                jDecimalNumber.addKeyListener(DecimalKeyListener.getInstance());
             }
             public synchronized void focusLost(FocusEvent e) {
                 System.out.println("Focus off decimal");
             }
         });
-        jbinaryNumber.addFocusListener(new FocusListener() {
+        jBinaryNumber.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
-                jbinaryNumber.addKeyListener(BinaryKeyListener.getInstance());
+                jBinaryNumber.addKeyListener(BinaryKeyListener.getInstance());
             }
             public void focusLost(FocusEvent e) {
                 System.out.println("Focus off binary");
             }
         });
-        jhexNumber.addFocusListener(new FocusListener() {
+        jHexNumber.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
-                jhexNumber.addKeyListener(HexKeyListener.getInstance());
+                jHexNumber.addKeyListener(HexKeyListener.getInstance());
             }
             public void focusLost(FocusEvent e) {
                 System.out.println("Focus off hex");
@@ -130,11 +129,11 @@ public class Gui extends JFrame{
                 layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(hexLabel)
-                                .addComponent(jhexNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jHexNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(binaryLabel)
-                                .addComponent(jbinaryNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBinaryNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(decimalLabel)
-                                .addComponent(jdecimalNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jDecimalNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(supportMe, GroupLayout.Alignment.CENTER)
                         )
         );
@@ -142,11 +141,11 @@ public class Gui extends JFrame{
                 layout.createSequentialGroup()
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(hexLabel)
-                                .addComponent(jhexNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jHexNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(binaryLabel)
-                                .addComponent(jbinaryNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBinaryNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(decimalLabel)
-                                .addComponent(jdecimalNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jDecimalNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(supportMe,12,GroupLayout.DEFAULT_SIZE,14)
                         )
 
@@ -159,44 +158,44 @@ public class Gui extends JFrame{
 
     }
     public void setJbinaryNumberWidth(int width){
-        jbinaryNumber.setBounds(new Rectangle(width,50));
+        jBinaryNumber.setBounds(new Rectangle(width,50));
     }
     public void setJHexNumberWidth(int width){
-        jhexNumber.setBounds(new Rectangle(width,50));
+        jHexNumber.setBounds(new Rectangle(width,50));
     }
     public void setJDecimalNumberWidth(int width){
-        jdecimalNumber.setBounds(new Rectangle(width,50));
+        jDecimalNumber.setBounds(new Rectangle(width,50));
     }
 
 
 
-    public String getJhexNumber() {
-        return jhexNumber.getText();
+    public String getJHexNumber() {
+        return jHexNumber.getText();
     }
 
     public void setJHexNumber(String text) {
-        jhexNumber.setText(text);
+        jHexNumber.setText(text);
     }
 
-    public String getJbinaryNumber() {
-        return jbinaryNumber.getText();
+    public String getJBinaryNumber() {
+        return jBinaryNumber.getText();
     }
 
     public void setJBinaryNumber(String text) {
-        jbinaryNumber.setText(text);
+        jBinaryNumber.setText(text);
     }
 
-    public String getJdecimalNumber() {
-        if (jdecimalNumber == null) {
+    public String getJDecimalNumber() {
+        if (jDecimalNumber == null) {
             return "";}
         else {
-            return jdecimalNumber.getText();
+            return jDecimalNumber.getText();
         }
 
     }
 
     public void setJDecimalNumber(String text) {
-        jdecimalNumber.setText(text);
+        jDecimalNumber.setText(text);
     }
 
     public void updateFromDecimal() {
@@ -211,12 +210,12 @@ public class Gui extends JFrame{
     }
 
     public void setJHexNumber(Color color){
-        jhexNumber.setForeground(color);
+        jHexNumber.setForeground(color);
     }
     public void setJBinaryNumber(Color color){
-        jbinaryNumber.setForeground(color);
+        jBinaryNumber.setForeground(color);
     }
     public void setJDecimalNumber(Color color){
-        jdecimalNumber.setForeground(color);
+        jDecimalNumber.setForeground(color);
     }
 }

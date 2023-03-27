@@ -10,7 +10,7 @@ public class DataFormatConverter {
     static Gui gui = Gui.getInstance();
 
     public void updateFromDecimal(){
-        String text = gui.getJdecimalNumber();
+        String text = gui.getJDecimalNumber();
         text = text.toUpperCase();
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
@@ -42,7 +42,7 @@ public class DataFormatConverter {
     }
     public static void updateFromBinary() {
 
-        String text = gui.getJbinaryNumber();
+        String text = gui.getJBinaryNumber();
         text = text.toUpperCase();
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
@@ -74,7 +74,7 @@ public class DataFormatConverter {
         }
     }
     public static void updateFromHex(){
-        String text = gui.getJhexNumber();
+        String text = gui.getJHexNumber();
         text = text.toUpperCase();
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
