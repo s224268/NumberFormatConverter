@@ -23,6 +23,7 @@ public class Gui extends JFrame{
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+
     private int WIDTH = round(screenSize.getWidth()*0.3,12);
     private int HEIGHT = round(screenSize.getHeight()*0.4,12);
     private int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
@@ -31,6 +32,8 @@ public class Gui extends JFrame{
     int round(double value, int nearest) {
         return (int) Math.round(value / nearest) * nearest;
     }
+
+
 
 
 
@@ -54,15 +57,12 @@ public class Gui extends JFrame{
         jHexNumber = new JTextArea("F");
         jHexNumber.setLineWrap(true);
         jHexNumber.setWrapStyleWord(true);
-        jHexNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
 
         jBinaryNumber = new JTextArea("1111");
-        jBinaryNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
         jBinaryNumber.setLineWrap(true);
         jBinaryNumber.setWrapStyleWord(true);
 
         jDecimalNumber = new JTextArea("15");
-        jDecimalNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
         jDecimalNumber.setLineWrap(true);
         jDecimalNumber.setWrapStyleWord(true);
 
