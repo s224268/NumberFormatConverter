@@ -17,7 +17,7 @@ public class DecimalKeyListener implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         System.out.println("Decimal has been pressed");
-        gui.updateFromDecimal(e.getKeyChar());
+        gui.updateFromDecimal();
     }
 
 

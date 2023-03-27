@@ -18,7 +18,7 @@ public class HexKeyListener implements KeyListener {
         System.out.println("Keychar " + c);
         System.out.println("Entire hex " + gui.getJhexNumber());
         System.out.println("Hex has been pressed");
-        gui.updateFromHex(c);
+        gui.updateFromHex();
     }
 
     public void keyTyped(KeyEvent e) {
