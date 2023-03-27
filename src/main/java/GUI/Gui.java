@@ -5,12 +5,9 @@ import Listeners.DecimalKeyListener;
 import Listeners.HexKeyListener;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.*;
-import java.math.BigInteger;
 import java.net.URI;
-import java.util.Objects;
 
 public class Gui extends JFrame{
 
@@ -177,7 +174,7 @@ public class Gui extends JFrame{
         return jhexNumber.getText();
     }
 
-    public void setJhexNumber(String text) {
+    public void setJHexNumber(String text) {
         jhexNumber.setText(text);
     }
 
@@ -185,7 +182,7 @@ public class Gui extends JFrame{
         return jbinaryNumber.getText();
     }
 
-    public void setJbinaryNumber(String text) {
+    public void setJBinaryNumber(String text) {
         jbinaryNumber.setText(text);
     }
 
@@ -198,7 +195,7 @@ public class Gui extends JFrame{
 
     }
 
-    public void setJdecimalNumber(String text) {
+    public void setJDecimalNumber(String text) {
         jdecimalNumber.setText(text);
     }
 
@@ -213,13 +210,13 @@ public class Gui extends JFrame{
         DataFormatConverter.updateFromHex();
     }
 
-    public void setJhexNumber(Color color){
+    public void setJHexNumber(Color color){
         jhexNumber.setForeground(color);
     }
-    public void setJbinaryNumber(Color color){
+    public void setJBinaryNumber(Color color){
         jbinaryNumber.setForeground(color);
     }
-    public void setJdecimalNumber(Color color){
+    public void setJDecimalNumber(Color color){
         jdecimalNumber.setForeground(color);
     }
 }

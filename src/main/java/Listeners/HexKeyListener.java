@@ -22,7 +22,6 @@ public class HexKeyListener implements KeyListener {
     }
 
     public void keyTyped(KeyEvent e) {
-
     }
 
 

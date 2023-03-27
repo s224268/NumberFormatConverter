@@ -21,22 +21,22 @@ public class DataFormatConverter {
             }
         }
         if (foundMistake){
-            gui.setJdecimalNumber(Color.red);
+            gui.setJDecimalNumber(Color.red);
         }
         else{
-            gui.setJdecimalNumber(Color.black);
+            gui.setJDecimalNumber(Color.black);
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,10);
                 String binary = value.toString(2);
                 String hexValue = value.toString(16);
-                gui.setJhexNumber(hexValue);
-                gui.setJhexNumber(Color.black);
-                gui.setJbinaryNumber(binary);
-                gui.setJbinaryNumber(Color.black);
+                gui.setJHexNumber(hexValue);
+                gui.setJHexNumber(Color.black);
+                gui.setJBinaryNumber(binary);
+                gui.setJBinaryNumber(Color.black);
             }
             else {
-                gui.setJdecimalNumber("");
-                gui.setJbinaryNumber("");
+                gui.setJDecimalNumber("");
+                gui.setJBinaryNumber("");
             }
         }
     }
@@ -53,23 +53,23 @@ public class DataFormatConverter {
             }
         }
         if (foundMistake){
-            gui.setJbinaryNumber(Color.red);
+            gui.setJBinaryNumber(Color.red);
         }
         else{
-            gui.setJbinaryNumber(Color.black);
+            gui.setJBinaryNumber(Color.black);
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,2);
                 String hexValue = value.toString(16);
                 String decimalValue = value.toString(10);
-                gui.setJdecimalNumber(decimalValue);
-                gui.setJdecimalNumber(Color.black);
-                gui.setJhexNumber(hexValue);
-                gui.setJhexNumber(Color.black);
+                gui.setJDecimalNumber(decimalValue);
+                gui.setJDecimalNumber(Color.black);
+                gui.setJHexNumber(hexValue);
+                gui.setJHexNumber(Color.black);
             }
             else {
                 System.out.println("String is null?");
-                gui.setJdecimalNumber("");
-                gui.setJhexNumber("");
+                gui.setJDecimalNumber("");
+                gui.setJHexNumber("");
             }
         }
     }
@@ -85,22 +85,22 @@ public class DataFormatConverter {
             }
         }
         if (foundMistake){
-            gui.setJhexNumber(Color.red);
+            gui.setJHexNumber(Color.red);
         }
         else{
-            gui.setJhexNumber(Color.black);
+            gui.setJHexNumber(Color.black);
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,16);
                 String binary = value.toString(2);
                 String decimalValue = value.toString(10);
-                gui.setJdecimalNumber(decimalValue);
-                gui.setJdecimalNumber(Color.black);
-                gui.setJbinaryNumber(binary);
-                gui.setJbinaryNumber(Color.black);
+                gui.setJDecimalNumber(decimalValue);
+                gui.setJDecimalNumber(Color.black);
+                gui.setJBinaryNumber(binary);
+                gui.setJBinaryNumber(Color.black);
             }
             else {
-                gui.setJdecimalNumber("");
-                gui.setJbinaryNumber("");
+                gui.setJDecimalNumber("");
+                gui.setJBinaryNumber("");
             }
         }
     }
