@@ -9,15 +9,16 @@ import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.*;
 import java.math.BigInteger;
+import java.net.URI;
 import java.util.Objects;
 
 public class Gui extends JFrame{
 
     DataFormatConverter dataFormatConverter = new DataFormatConverter();
 
-    private static JTextField jhexNumber;
-    private static JTextField jbinaryNumber;
-    private static JTextField jdecimalNumber;
+    private static JTextArea jhexNumber;
+    private static JTextArea jbinaryNumber;
+    private static JTextArea jdecimalNumber;
 
 
 
@@ -33,7 +34,6 @@ public class Gui extends JFrame{
 
 
     private static Gui gui;
-    //Constructor
 
 
     public static Gui getInstance(){
@@ -51,17 +51,31 @@ public class Gui extends JFrame{
         this.setTitle("Anto's converter");
         this.setResizable(true);
 
-        jhexNumber = new JTextField("F");
-        jhexNumber.setBounds((WIDTH-BOXWIDTH)/2-4,(12+BOXHEIGHT)*1, BOXWIDTH, BOXHEIGHT);
+        jhexNumber = new JTextArea("F");
+        jhexNumber.setLineWrap(true);
+        jhexNumber.setWrapStyleWord(true);
+        jhexNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
 
-        jbinaryNumber = new JTextField("1111");
-        jbinaryNumber.setBounds((WIDTH-BOXWIDTH)/2-4,(12+BOXHEIGHT)*2, BOXWIDTH, BOXHEIGHT);
+        jbinaryNumber = new JTextArea("1111");
+        jbinaryNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
+        jbinaryNumber.setLineWrap(true);
+        jbinaryNumber.setWrapStyleWord(true);
 
-        jdecimalNumber = new JTextField("15");
-        jdecimalNumber.setBounds((WIDTH-BOXWIDTH)/2-4, (12+BOXHEIGHT)*3, BOXWIDTH, BOXHEIGHT);
+        jdecimalNumber = new JTextArea("15");
+        jdecimalNumber.setPreferredSize(new Dimension(BOXWIDTH, BOXHEIGHT));
+        jdecimalNumber.setLineWrap(true);
+        jdecimalNumber.setWrapStyleWord(true);
 
-        JLabel label = new JLabel("Jeg ved ikke hvad den her gør");
-        label.setBounds((WIDTH-BOXWIDTH)/2, 20, BOXWIDTH, BOXHEIGHT);
+        JLabel hexLabel = new JLabel("Hex value");
+        JLabel binaryLabel = new JLabel("Binary value");
+        JLabel decimalLabel = new JLabel("Decimal value");
+        //JLabel supportMe = new JLabel();
+
+        // Create a new JLabel with the hyperlink text
+        JLabel supportMe = new JLabel("<html><a href='paypal.me/AntonHelsgaun'>Buy me a cup of coffee on PayPal</a></html>");
+
+
+
 
         jdecimalNumber.addFocusListener(new FocusListener() {
             public synchronized void focusGained(FocusEvent e) {
@@ -88,12 +102,76 @@ public class Gui extends JFrame{
             }
         });
 
-        this.add(jhexNumber);
-        this.add(jbinaryNumber);
-        this.add(jdecimalNumber);
-        this.setLayout(null);
+        supportMe.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                // Open the hyperlink in the user's default web browser
+                try {
+                    Desktop.getDesktop().browse(new URI("https://www.paypal.me/AntonHelsgaun"));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseEntered(MouseEvent e) {
+                // Change the cursor to a hand cursor when the mouse enters the label
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            public void mouseExited(MouseEvent e) {
+                // Change the cursor back to the default cursor when the mouse exits the label
+                setCursor(Cursor.getDefaultCursor());
+            }
+        });
+
+
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(
+                layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(hexLabel)
+                                .addComponent(jhexNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(binaryLabel)
+                                .addComponent(jbinaryNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(decimalLabel)
+                                .addComponent(jdecimalNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(supportMe, GroupLayout.Alignment.CENTER)
+                        )
+        );
+        layout.setVerticalGroup(
+                layout.createSequentialGroup()
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(hexLabel)
+                                .addComponent(jhexNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(binaryLabel)
+                                .addComponent(jbinaryNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(decimalLabel)
+                                .addComponent(jdecimalNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(supportMe,12,GroupLayout.DEFAULT_SIZE,14)
+                        )
+
+
+        ;
+        this.setMinimumSize(new Dimension(250,210));
+
+        this.add(panel);
         this.setVisible(true);
+
     }
+    public void setJbinaryNumberWidth(int width){
+        jbinaryNumber.setBounds(new Rectangle(width,50));
+    }
+    public void setJHexNumberWidth(int width){
+        jhexNumber.setBounds(new Rectangle(width,50));
+    }
+    public void setJDecimalNumberWidth(int width){
+        jdecimalNumber.setBounds(new Rectangle(width,50));
+    }
+
+
 
     public String getJhexNumber() {
         return jhexNumber.getText();
@@ -128,7 +206,7 @@ public class Gui extends JFrame{
         dataFormatConverter.updateFromDecimal(c);
         }
 
-    public void updateFromBinary(char c){ //TODO MOVE CODE
+    public void updateFromBinary(char c){
         DataFormatConverter.updateFromBinary(c);
     }
     public void updateFromHex(char c) {
