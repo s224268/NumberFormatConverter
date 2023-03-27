@@ -65,9 +65,7 @@ public class Gui extends JFrame{
         JLabel hexLabel = new JLabel("Hex value");
         JLabel binaryLabel = new JLabel("Binary value");
         JLabel decimalLabel = new JLabel("Decimal value");
-        //JLabel supportMe = new JLabel();
 
-        // Create a new JLabel with the hyperlink text
         JLabel supportMe = new JLabel("<html><a href='paypal.me/AntonHelsgaun'>Buy me a cup of coffee on PayPal</a></html>");
 
 
@@ -157,17 +155,6 @@ public class Gui extends JFrame{
         this.setVisible(true);
 
     }
-    public void setJbinaryNumberWidth(int width){
-        jBinaryNumber.setBounds(new Rectangle(width,50));
-    }
-    public void setJHexNumberWidth(int width){
-        jHexNumber.setBounds(new Rectangle(width,50));
-    }
-    public void setJDecimalNumberWidth(int width){
-        jDecimalNumber.setBounds(new Rectangle(width,50));
-    }
-
-
 
     public String getJHexNumber() {
         return jHexNumber.getText();
