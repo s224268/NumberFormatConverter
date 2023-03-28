@@ -5,15 +5,20 @@ import Listeners.DecimalKeyListener;
 import Listeners.HexKeyListener;
 
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.net.URI;
 
 public class Gui extends JFrame{
 
     DataFormatConverter dataFormatConverter = new DataFormatConverter();
 
-    private static JTextArea jHexNumber;
+    private static RoundedTextArea jHexNumber;
     private static JTextArea jBinaryNumber;
     private static JTextArea jDecimalNumber;
 
@@ -51,21 +56,31 @@ public class Gui extends JFrame{
         this.setTitle("Anto's number format converter");
         this.setResizable(true);
 
-        jHexNumber = new JTextArea("F");
-        jHexNumber.setLineWrap(true);
-        jHexNumber.setWrapStyleWord(true);
+        //jHexNumber = new JTextArea("F");
+        jHexNumber = new RoundedTextArea(40);
+        JScrollPane scrollPane = new JScrollPane(jHexNumber);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        jHexNumber.setFont(new Font("Roboto", Font.BOLD, 12));
+        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        jHexNumber.setBorder(padding);
 
         jBinaryNumber = new JTextArea("1111");
         jBinaryNumber.setLineWrap(true);
         jBinaryNumber.setWrapStyleWord(true);
+        jBinaryNumber.setFont(new Font("Roboto", Font.BOLD, 12));
+
 
         jDecimalNumber = new JTextArea("15");
         jDecimalNumber.setLineWrap(true);
         jDecimalNumber.setWrapStyleWord(true);
+        jDecimalNumber.setFont(new Font("Roboto", Font.BOLD, 12));
 
         JLabel hexLabel = new JLabel("Hex value");
+        hexLabel.setFont(new Font("Roboto", Font.BOLD, 14));
         JLabel binaryLabel = new JLabel("Binary value");
+        binaryLabel.setFont(new Font("Roboto", Font.BOLD, 14));
         JLabel decimalLabel = new JLabel("Decimal value");
+        decimalLabel.setFont(new Font("Roboto", Font.BOLD, 14));
 
         JLabel supportMe = new JLabel("<html><a href='https://www.paypal.com/donate/?hosted_button_id=TRJXNGCDENSYL'>Donate to me on PayPal</a></html>");
 
