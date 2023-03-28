@@ -27,7 +27,7 @@ public class RoundedTextArea extends JTextArea {
         g2.dispose();
     }
 
-    protected void paintComponent(Color color) { //Used to change colors later
+    protected void paintComponent(Color color) { //Used to change colors later?
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(color);
         g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);

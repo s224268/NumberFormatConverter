@@ -33,7 +33,7 @@ public class Gui extends JFrame{
     private final int HEIGHT = round(400,12);
     private final int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
     private final int BOXWIDTH = round(WIDTH*0.8,12);
-    private final int radius = 18;
+    private static final int radius = 18;
 
     Dimension prefferedSize = new Dimension(BOXWIDTH,BOXHEIGHT);
 
@@ -63,6 +63,8 @@ public class Gui extends JFrame{
         return gui;
     }
 
+    static Border padding = BorderFactory.createEmptyBorder(radius,radius,radius,radius);
+
 
     public void gui(){
 
@@ -78,11 +80,8 @@ public class Gui extends JFrame{
         this.setResizable(true);
         this.setMinimumSize(new Dimension(250,255));
 
-        Border padding = BorderFactory.createEmptyBorder(radius,radius,radius,radius);
 
         jHexNumber = new RoundedTextArea(radius);
-        JScrollPane hexScrollPane = new JScrollPane(jHexNumber);
-        hexScrollPane.setBorder(BorderFactory.createEmptyBorder());
         jHexNumber.setFont(primaryFont);
         jHexNumber.setBorder(padding);
         jHexNumber.setForeground(textColor);
@@ -90,8 +89,6 @@ public class Gui extends JFrame{
         jHexNumber.setPreferredSize(getPreferredSize());
 
         jBinaryNumber = new RoundedTextArea(radius);
-        JScrollPane binaryScrollPane = new JScrollPane(jBinaryNumber);
-        binaryScrollPane.setBorder(BorderFactory.createEmptyBorder());
         jBinaryNumber.setFont(primaryFont);
         jBinaryNumber.setBorder(padding);
         jBinaryNumber.setForeground(textColor);
@@ -99,8 +96,6 @@ public class Gui extends JFrame{
         jBinaryNumber.setPreferredSize(getPreferredSize());
 
         jDecimalNumber = getjDecimalNumber();
-        JScrollPane decimalScrollPane = new JScrollPane(jDecimalNumber);
-        decimalScrollPane.setBorder(BorderFactory.createEmptyBorder());
         jDecimalNumber.setFont(primaryFont);
         jDecimalNumber.setBorder(padding);
         jDecimalNumber.setForeground(textColor);
@@ -220,16 +215,6 @@ public class Gui extends JFrame{
         this.add(panel);
         this.setVisible(true);
 
-    }
-
-    private RoundedTextArea constructRoundedTextArea(){
-        JScrollPane hexScrollPane = new JScrollPane(jHexNumber);
-        hexScrollPane.setBorder(BorderFactory.createEmptyBorder());
-        jHexNumber.setFont(primaryFont);
-        jHexNumber.setBorder(paddifng);
-        jHexNumber.setForeground(textColor);
-        jHexNumber.setBackground(primaryColor);
-        jHexNumber.setPreferredSize(getPreferredSize());
     }
 
     private RoundedTextArea getjDecimalNumber() {
