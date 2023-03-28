@@ -108,6 +108,7 @@ public class Gui extends JFrame{
         decimalLabel.setFont(titleFont);
         decimalLabel.setForeground(textColor);
 
+
         JLabel supportMe = new JLabel("Support me on PayPal");
         supportMe.setForeground(highlightColor);
 
@@ -125,6 +126,8 @@ public class Gui extends JFrame{
                 jDecimalNumber.setFont(primaryFont);
                 jDecimalNumber.setForeground(textColor);
                 jDecimalNumber.setOpaque(false);
+                //TODO: ADD GRAB FOCUS WHEN pressing tab
+                //jDecimalNumber.grabFocus();
             }
         });
         jBinaryNumber.addFocusListener(new FocusListener() {
