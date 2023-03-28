@@ -118,21 +118,16 @@ public class Gui extends JFrame{
         jDecimalNumber.addFocusListener(new FocusListener() {
             public synchronized void focusGained(FocusEvent e) {
                 jDecimalNumber.addKeyListener(DecimalKeyListener.getInstance());
-                String text = jDecimalNumber.getText();
-                jDecimalNumber = null;
-                jDecimalNumber = new RoundedTextArea(radius,Color.GREEN);
-                jDecimalNumber.setFont(primaryFont);
-                jDecimalNumber.setPreferredSize(prefferedSize);
-                jDecimalNumber.setBorder(padding);
-                jDecimalNumber.setForeground(textColor);
-                jDecimalNumber.setBackground(primaryColor);
-                jDecimalNumber.setPreferredSize(getPreferredSize());
-                jDecimalNumber.setText(text);
+                jDecimalNumber.setFont(highlightFont);
+                jDecimalNumber.setForeground(highlightColor);
+                jDecimalNumber.setOpaque(true); //Setting to and from opaque is a super sketch way to make the field change color when you focus it
+
             }
             public synchronized void focusLost(FocusEvent e) {
                 System.out.println("Focus off decimal");
                 jDecimalNumber.setFont(primaryFont);
                 jDecimalNumber.setForeground(textColor);
+                jDecimalNumber.setOpaque(false);
             }
         });
         jBinaryNumber.addFocusListener(new FocusListener() {
@@ -140,11 +135,13 @@ public class Gui extends JFrame{
                 jBinaryNumber.addKeyListener(BinaryKeyListener.getInstance());
                 jBinaryNumber.setFont(highlightFont);
                 jBinaryNumber.setForeground(highlightColor);
+                jBinaryNumber.setOpaque(true);
             }
             public void focusLost(FocusEvent e) {
                 System.out.println("Focus off binary");
                 jBinaryNumber.setFont(primaryFont);
                 jBinaryNumber.setForeground(textColor);
+                jBinaryNumber.setOpaque(false);
             }
         });
         jHexNumber.addFocusListener(new FocusListener() {
@@ -152,11 +149,13 @@ public class Gui extends JFrame{
                 jHexNumber.addKeyListener(HexKeyListener.getInstance());
                 jHexNumber.setFont(highlightFont);
                 jHexNumber.setForeground(highlightColor);
+                jHexNumber.setOpaque(true);
             }
             public void focusLost(FocusEvent e) {
                 System.out.println("Focus off hex");
                 jHexNumber.setFont(primaryFont);
                 jHexNumber.setForeground(textColor);
+                jHexNumber.setOpaque(false);
 
             }
         });
