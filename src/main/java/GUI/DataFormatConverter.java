@@ -105,7 +105,6 @@ public class DataFormatConverter {
         }
     }
 
-
     public static boolean isNotDigit(char c, int radix){
         char[] charset = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
         String cString = Character.toString(c);

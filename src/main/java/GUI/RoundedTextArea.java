@@ -9,8 +9,18 @@ public class RoundedTextArea extends JTextArea {
     static Graphics2D g2;
     static Graphics g;
 
+    Color color = Color.decode("#F2F2F2");
+
     public RoundedTextArea(int radius) {
         this.radius = radius;
+        setOpaque(false);
+        setLineWrap(true);
+        setWrapStyleWord(true);
+    }
+
+    public RoundedTextArea(int radius, Color color) {
+        this.radius = radius;
+        this.color = color;
         setOpaque(false);
         setLineWrap(true);
         setWrapStyleWord(true);
@@ -20,14 +30,6 @@ public class RoundedTextArea extends JTextArea {
     protected void paintComponent(Graphics g) { //Used in initial construction and for constructing/defining g and g2
         RoundedTextArea.g = g;
         g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(Color.CYAN);
-        g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
-        super.paintComponent(g);
-        g2.dispose();
-    }
-
-    protected void paintComponent(Color color) { //Used to change colors later?
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(color);
         g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);

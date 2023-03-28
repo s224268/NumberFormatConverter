@@ -86,21 +86,21 @@ public class Gui extends JFrame{
         jHexNumber.setBorder(padding);
         jHexNumber.setForeground(textColor);
         jHexNumber.setBackground(primaryColor);
-        jHexNumber.setPreferredSize(getPreferredSize());
+        jHexNumber.setPreferredSize(prefferedSize);
 
         jBinaryNumber = new RoundedTextArea(radius);
         jBinaryNumber.setFont(primaryFont);
         jBinaryNumber.setBorder(padding);
         jBinaryNumber.setForeground(textColor);
         jBinaryNumber.setBackground(secondaryColor);
-        jBinaryNumber.setPreferredSize(getPreferredSize());
+        jBinaryNumber.setPreferredSize(prefferedSize);
 
         jDecimalNumber = getjDecimalNumber();
         jDecimalNumber.setFont(primaryFont);
         jDecimalNumber.setBorder(padding);
         jDecimalNumber.setForeground(textColor);
         jDecimalNumber.setBackground(primaryColor);
-        jDecimalNumber.setPreferredSize(getPreferredSize());
+        jDecimalNumber.setPreferredSize(prefferedSize);
 
         JLabel hexLabel = new JLabel("Hex value");
         hexLabel.setFont(titleFont);
@@ -118,9 +118,16 @@ public class Gui extends JFrame{
         jDecimalNumber.addFocusListener(new FocusListener() {
             public synchronized void focusGained(FocusEvent e) {
                 jDecimalNumber.addKeyListener(DecimalKeyListener.getInstance());
-                jDecimalNumber.setFont(highlightFont);
-                jDecimalNumber.setForeground(highlightColor);
-                jDecimalNumber.paintComponent(errorColor);
+                String text = jDecimalNumber.getText();
+                jDecimalNumber = null;
+                jDecimalNumber = new RoundedTextArea(radius,Color.GREEN);
+                jDecimalNumber.setFont(primaryFont);
+                jDecimalNumber.setPreferredSize(prefferedSize);
+                jDecimalNumber.setBorder(padding);
+                jDecimalNumber.setForeground(textColor);
+                jDecimalNumber.setBackground(primaryColor);
+                jDecimalNumber.setPreferredSize(getPreferredSize());
+                jDecimalNumber.setText(text);
             }
             public synchronized void focusLost(FocusEvent e) {
                 System.out.println("Focus off decimal");
