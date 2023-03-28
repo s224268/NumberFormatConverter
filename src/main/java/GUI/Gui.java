@@ -19,8 +19,8 @@ public class Gui extends JFrame{
     DataFormatConverter dataFormatConverter = new DataFormatConverter();
 
     private static RoundedTextArea jHexNumber;
-    private static JTextArea jBinaryNumber;
-    private static JTextArea jDecimalNumber;
+    private static RoundedTextArea jBinaryNumber;
+    private static RoundedTextArea jDecimalNumber;
 
 
 
@@ -33,7 +33,9 @@ public class Gui extends JFrame{
     private final int HEIGHT = round(400,12);
     private final int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
     private final int BOXWIDTH = round(WIDTH*0.8,12);
-    private final int radius = 4;
+    private final int radius = 18;
+
+    Dimension prefferedSize = new Dimension(BOXWIDTH,BOXHEIGHT);
 
     int round(double value, int nearest) {
         return (int) Math.round(value / nearest) * nearest;
@@ -43,9 +45,15 @@ public class Gui extends JFrame{
     private static Gui gui;
 
     static Color primaryColor;
-    static Color SecondaryColor;
+    static Color secondaryColor;
     static Color highlightColor;
     static Color errorColor;
+    static Color textColor;
+
+    final Font primaryFont = new Font("Roboto", Font.PLAIN, 14);
+    final Font highlightFont = new Font("Roboto", Font.BOLD, 14);
+
+    final Font titleFont = new Font("Roboto", Font.PLAIN, 16);
 
 
     public static Gui getInstance(){
@@ -58,45 +66,56 @@ public class Gui extends JFrame{
 
     public void gui(){
 
-        Color primaryColor = Color.decode("#FAFAFA");
-        Color SecondaryColor = Color.decode("#DEE3E7");
-        Color highlightColor = Color.decode("#37474F");
-        Color textColor = Color.decode("#222222");
-        Color errorColor = Color.red;
+        primaryColor = Color.decode("#FAFAFA");
+        secondaryColor = Color.decode("#DEE3E7");
+        highlightColor = Color.decode("#37474F");
+        textColor = Color.decode("#222222");
+        errorColor = Color.red;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Anto's number format converter");
         this.setResizable(true);
-        this.setMinimumSize(new Dimension(250,220));
+        this.setMinimumSize(new Dimension(250,255));
 
         Border padding = BorderFactory.createEmptyBorder(radius,radius,radius,radius);
 
-        //jHexNumber = new JTextArea("F");
         jHexNumber = new RoundedTextArea(radius);
-        JScrollPane scrollPane = new JScrollPane(jHexNumber);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        jHexNumber.setFont(new Font("Roboto", Font.PLAIN, 12));
+        JScrollPane hexScrollPane = new JScrollPane(jHexNumber);
+        hexScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        jHexNumber.setFont(primaryFont);
         jHexNumber.setBorder(padding);
-        //jHexNumber.setBackground(Color.decode("#6200EE"));
+        jHexNumber.setForeground(textColor);
+        jHexNumber.setBackground(primaryColor);
+        jHexNumber.setPreferredSize(getPreferredSize());
 
-        jBinaryNumber = new JTextArea("1111");
-        jBinaryNumber.setLineWrap(true);
-        jBinaryNumber.setWrapStyleWord(true);
-        jBinaryNumber.setFont(new Font("Roboto", Font.PLAIN, 12));
+        jBinaryNumber = new RoundedTextArea(radius);
+        JScrollPane binaryScrollPane = new JScrollPane(jBinaryNumber);
+        binaryScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        jBinaryNumber.setFont(primaryFont);
+        jBinaryNumber.setBorder(padding);
+        jBinaryNumber.setForeground(textColor);
+        jBinaryNumber.setBackground(secondaryColor);
+        jBinaryNumber.setPreferredSize(getPreferredSize());
 
-
-        jDecimalNumber = new JTextArea("15");
-        jDecimalNumber.setLineWrap(true);
-        jDecimalNumber.setWrapStyleWord(true);
-        jDecimalNumber.setFont(new Font("Roboto", Font.PLAIN, 12));
+        jDecimalNumber = getjDecimalNumber();
+        JScrollPane decimalScrollPane = new JScrollPane(jDecimalNumber);
+        decimalScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        jDecimalNumber.setFont(primaryFont);
+        jDecimalNumber.setBorder(padding);
+        jDecimalNumber.setForeground(textColor);
+        jDecimalNumber.setBackground(primaryColor);
+        jDecimalNumber.setPreferredSize(getPreferredSize());
 
         JLabel hexLabel = new JLabel("Hex value");
-        hexLabel.setFont(new Font("Roboto", Font.BOLD, 14));
+        hexLabel.setFont(titleFont);
+        hexLabel.setForeground(textColor);
         JLabel binaryLabel = new JLabel("Binary value");
-        binaryLabel.setFont(new Font("Roboto", Font.BOLD, 14));
+        binaryLabel.setFont(titleFont);
+        binaryLabel.setForeground(textColor);
         JLabel decimalLabel = new JLabel("Decimal value");
-        decimalLabel.setFont(new Font("Roboto", Font.BOLD, 14));
+        decimalLabel.setFont(titleFont);
+        decimalLabel.setForeground(textColor);
 
         JLabel supportMe = new JLabel("<html><a href='https://www.paypal.com/donate/?hosted_button_id=TRJXNGCDENSYL'>Donate to me on PayPal</a></html>");
 
@@ -104,25 +123,39 @@ public class Gui extends JFrame{
         jDecimalNumber.addFocusListener(new FocusListener() {
             public synchronized void focusGained(FocusEvent e) {
                 jDecimalNumber.addKeyListener(DecimalKeyListener.getInstance());
+                jDecimalNumber.setFont(highlightFont);
+                jDecimalNumber.setForeground(highlightColor);
+                jDecimalNumber.paintComponent(errorColor);
             }
             public synchronized void focusLost(FocusEvent e) {
                 System.out.println("Focus off decimal");
+                jDecimalNumber.setFont(primaryFont);
+                jDecimalNumber.setForeground(textColor);
             }
         });
         jBinaryNumber.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
                 jBinaryNumber.addKeyListener(BinaryKeyListener.getInstance());
+                jBinaryNumber.setFont(highlightFont);
+                jBinaryNumber.setForeground(highlightColor);
             }
             public void focusLost(FocusEvent e) {
                 System.out.println("Focus off binary");
+                jBinaryNumber.setFont(primaryFont);
+                jBinaryNumber.setForeground(textColor);
             }
         });
         jHexNumber.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
                 jHexNumber.addKeyListener(HexKeyListener.getInstance());
+                jHexNumber.setFont(highlightFont);
+                jHexNumber.setForeground(highlightColor);
             }
             public void focusLost(FocusEvent e) {
                 System.out.println("Focus off hex");
+                jHexNumber.setFont(primaryFont);
+                jHexNumber.setForeground(textColor);
+
             }
         });
 
@@ -149,7 +182,7 @@ public class Gui extends JFrame{
         JPanel panel = new JPanel(new FlowLayout());
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
-        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateGaps(false);
         layout.setAutoCreateContainerGaps(true);
 
         layout.setHorizontalGroup(
@@ -169,10 +202,13 @@ public class Gui extends JFrame{
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(hexLabel)
                                 .addComponent(jHexNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(14)
                                 .addComponent(binaryLabel)
                                 .addComponent(jBinaryNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(14)
                                 .addComponent(decimalLabel)
                                 .addComponent(jDecimalNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(14)
                                 .addComponent(supportMe,12,GroupLayout.DEFAULT_SIZE,14)
                         )
 
@@ -184,6 +220,20 @@ public class Gui extends JFrame{
         this.add(panel);
         this.setVisible(true);
 
+    }
+
+    private RoundedTextArea constructRoundedTextArea(){
+        JScrollPane hexScrollPane = new JScrollPane(jHexNumber);
+        hexScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        jHexNumber.setFont(primaryFont);
+        jHexNumber.setBorder(paddifng);
+        jHexNumber.setForeground(textColor);
+        jHexNumber.setBackground(primaryColor);
+        jHexNumber.setPreferredSize(getPreferredSize());
+    }
+
+    private RoundedTextArea getjDecimalNumber() {
+        return new RoundedTextArea(radius);
     }
 
     public String getJHexNumber() {
