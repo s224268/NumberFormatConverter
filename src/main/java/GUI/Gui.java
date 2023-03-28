@@ -29,10 +29,11 @@ public class Gui extends JFrame{
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 
-    private int WIDTH = round(screenSize.getWidth()*0.2,12);
-    private int HEIGHT = round(400,12);
-    private int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
-    private int BOXWIDTH = round(WIDTH*0.8,12);
+    private final int WIDTH = round(screenSize.getWidth()*0.2,12);
+    private final int HEIGHT = round(400,12);
+    private final int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
+    private final int BOXWIDTH = round(WIDTH*0.8,12);
+    private final int radius = 4;
 
     int round(double value, int nearest) {
         return (int) Math.round(value / nearest) * nearest;
@@ -40,6 +41,11 @@ public class Gui extends JFrame{
 
 
     private static Gui gui;
+
+    static Color primaryColor;
+    static Color SecondaryColor;
+    static Color highlightColor;
+    static Color errorColor;
 
 
     public static Gui getInstance(){
@@ -51,29 +57,39 @@ public class Gui extends JFrame{
 
 
     public void gui(){
+
+        Color primaryColor = Color.decode("#FAFAFA");
+        Color SecondaryColor = Color.decode("#DEE3E7");
+        Color highlightColor = Color.decode("#37474F");
+        Color textColor = Color.decode("#222222");
+        Color errorColor = Color.red;
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Anto's number format converter");
         this.setResizable(true);
+        this.setMinimumSize(new Dimension(250,220));
+
+        Border padding = BorderFactory.createEmptyBorder(radius,radius,radius,radius);
 
         //jHexNumber = new JTextArea("F");
-        jHexNumber = new RoundedTextArea(40);
+        jHexNumber = new RoundedTextArea(radius);
         JScrollPane scrollPane = new JScrollPane(jHexNumber);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        jHexNumber.setFont(new Font("Roboto", Font.BOLD, 12));
-        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        jHexNumber.setFont(new Font("Roboto", Font.PLAIN, 12));
         jHexNumber.setBorder(padding);
+        //jHexNumber.setBackground(Color.decode("#6200EE"));
 
         jBinaryNumber = new JTextArea("1111");
         jBinaryNumber.setLineWrap(true);
         jBinaryNumber.setWrapStyleWord(true);
-        jBinaryNumber.setFont(new Font("Roboto", Font.BOLD, 12));
+        jBinaryNumber.setFont(new Font("Roboto", Font.PLAIN, 12));
 
 
         jDecimalNumber = new JTextArea("15");
         jDecimalNumber.setLineWrap(true);
         jDecimalNumber.setWrapStyleWord(true);
-        jDecimalNumber.setFont(new Font("Roboto", Font.BOLD, 12));
+        jDecimalNumber.setFont(new Font("Roboto", Font.PLAIN, 12));
 
         JLabel hexLabel = new JLabel("Hex value");
         hexLabel.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -162,7 +178,8 @@ public class Gui extends JFrame{
 
 
         ;
-        this.setMinimumSize(new Dimension(250,220));
+
+        panel.setBackground(primaryColor);
 
         this.add(panel);
         this.setVisible(true);
