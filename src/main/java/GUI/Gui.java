@@ -5,13 +5,9 @@ import Listeners.DecimalKeyListener;
 import Listeners.HexKeyListener;
 
 import javax.swing.*;
-import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 import java.net.URI;
 
 public class Gui extends JFrame{
@@ -33,9 +29,9 @@ public class Gui extends JFrame{
     private final int HEIGHT = round(400,12);
     private final int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
     private final int BOXWIDTH = round(WIDTH*0.8,12);
-    private static final int radius = 18;
+    private static final int radius = 6;
 
-    Dimension prefferedSize = new Dimension(BOXWIDTH,BOXHEIGHT);
+    Dimension preferredSize = new Dimension(BOXWIDTH,BOXHEIGHT);
 
     int round(double value, int nearest) {
         return (int) Math.round(value / nearest) * nearest;
@@ -53,7 +49,7 @@ public class Gui extends JFrame{
     final Font primaryFont = new Font("Roboto", Font.PLAIN, 14);
     final Font highlightFont = new Font("Roboto", Font.BOLD, 14);
 
-    final Font titleFont = new Font("Roboto", Font.PLAIN, 16);
+    final Font titleFont = new Font("Roboto", Font.BOLD, 14);
 
 
     public static Gui getInstance(){
@@ -86,21 +82,21 @@ public class Gui extends JFrame{
         jHexNumber.setBorder(padding);
         jHexNumber.setForeground(textColor);
         jHexNumber.setBackground(primaryColor);
-        jHexNumber.setPreferredSize(prefferedSize);
+        jHexNumber.setPreferredSize(preferredSize);
 
         jBinaryNumber = new RoundedTextArea(radius);
         jBinaryNumber.setFont(primaryFont);
         jBinaryNumber.setBorder(padding);
         jBinaryNumber.setForeground(textColor);
-        jBinaryNumber.setBackground(secondaryColor);
-        jBinaryNumber.setPreferredSize(prefferedSize);
+        jBinaryNumber.setBackground(primaryColor);
+        jBinaryNumber.setPreferredSize(preferredSize);
 
         jDecimalNumber = getjDecimalNumber();
         jDecimalNumber.setFont(primaryFont);
         jDecimalNumber.setBorder(padding);
         jDecimalNumber.setForeground(textColor);
         jDecimalNumber.setBackground(primaryColor);
-        jDecimalNumber.setPreferredSize(prefferedSize);
+        jDecimalNumber.setPreferredSize(preferredSize);
 
         JLabel hexLabel = new JLabel("Hex value");
         hexLabel.setFont(titleFont);
@@ -112,7 +108,8 @@ public class Gui extends JFrame{
         decimalLabel.setFont(titleFont);
         decimalLabel.setForeground(textColor);
 
-        JLabel supportMe = new JLabel("<html><a href='https://www.paypal.com/donate/?hosted_button_id=TRJXNGCDENSYL'>Donate to me on PayPal</a></html>");
+        JLabel supportMe = new JLabel("Support me on PayPal");
+        supportMe.setForeground(highlightColor);
 
 
         jDecimalNumber.addFocusListener(new FocusListener() {
@@ -195,7 +192,7 @@ public class Gui extends JFrame{
                                 .addComponent(jBinaryNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(decimalLabel)
                                 .addComponent(jDecimalNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(supportMe, GroupLayout.Alignment.CENTER)
+                                .addComponent(supportMe, GroupLayout.Alignment.TRAILING)
                         )
         );
         layout.setVerticalGroup(
@@ -216,7 +213,7 @@ public class Gui extends JFrame{
 
         ;
 
-        panel.setBackground(primaryColor);
+        panel.setBackground(secondaryColor);
 
         this.add(panel);
         this.setVisible(true);
