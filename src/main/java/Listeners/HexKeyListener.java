@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 
 public class HexKeyListener implements KeyListener {
     private static HexKeyListener hexKeyListener;
+    Gui gui = Gui.getInstance();
 
     @Override //These arent needed they just kinda need to be here
     public void keyPressed(KeyEvent e) {
@@ -13,15 +14,18 @@ public class HexKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        Gui gui = Gui.getInstance();
-        char c = e.getKeyChar();
-        System.out.println("Keychar " + c);
-        System.out.println("Entire hex " + gui.getJHexNumber());
-        System.out.println("Hex has been pressed");
         gui.updateFromHex();
     }
 
     public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == 9){
+            e.getModifiersEx();
+            Gui.jBinaryNumber.grabFocus();
+            if (gui.getJHexNumber().length() == 0){
+                gui.setJHexNumber("");
+            }
+        }
+        gui.updateFromHex();
     }
 
 

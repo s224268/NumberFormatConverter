@@ -8,10 +8,10 @@ import java.util.Objects;
 public class DataFormatConverter {
 
     static Gui gui = Gui.getInstance();
+    static Color textColor = gui.getTextColor();
 
     public void updateFromDecimal(){
         String text = gui.getJDecimalNumber();
-        text = text.toUpperCase();
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
         for (int i = 0; i<text.length();i++){
@@ -24,15 +24,16 @@ public class DataFormatConverter {
             gui.setJDecimalNumber(Color.red);
         }
         else{
-            gui.setJDecimalNumber(Color.black);
+            gui.setJDecimalNumber(textColor);
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,10);
                 String binary = value.toString(2);
                 String hexValue = value.toString(16).toUpperCase();
                 gui.setJHexNumber(hexValue);
-                gui.setJHexNumber(Color.black);
                 gui.setJBinaryNumber(binary);
-                gui.setJBinaryNumber(Color.black);
+                gui.updateJDecimalNumberTextColor();
+                gui.updateJBinaryNumberTextColor();
+                gui.updateJHexNumberTextColor();
             }
             else {
                 gui.setJDecimalNumber("");
@@ -43,7 +44,7 @@ public class DataFormatConverter {
     public static void updateFromBinary() {
 
         String text = gui.getJBinaryNumber();
-        text = text.toUpperCase();
+        System.out.println(text);
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
         for (int i = 0; i<text.length();i++){
@@ -56,15 +57,16 @@ public class DataFormatConverter {
             gui.setJBinaryNumber(Color.red);
         }
         else{
-            gui.setJBinaryNumber(Color.black);
+            gui.updateJBinaryNumberTextColor(); //This may not be nessecary
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,2);
                 String hexValue = value.toString(16).toUpperCase();
                 String decimalValue = value.toString(10);
+                gui.updateJDecimalNumberTextColor();
+                gui.updateJBinaryNumberTextColor();
+                gui.updateJHexNumberTextColor();
                 gui.setJDecimalNumber(decimalValue);
-                gui.setJDecimalNumber(Color.black);
                 gui.setJHexNumber(hexValue);
-                gui.setJHexNumber(Color.black);
             }
             else {
                 System.out.println("String is null?");
@@ -88,15 +90,16 @@ public class DataFormatConverter {
             gui.setJHexNumber(Color.red);
         }
         else{
-            gui.setJHexNumber(Color.black);
+            gui.setJHexNumber(textColor);
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,16);
                 String binary = value.toString(2);
                 String decimalValue = value.toString(10);
                 gui.setJDecimalNumber(decimalValue);
-                gui.setJDecimalNumber(Color.black);
                 gui.setJBinaryNumber(binary);
-                gui.setJBinaryNumber(Color.black);
+                gui.updateJDecimalNumberTextColor();
+                gui.updateJBinaryNumberTextColor();
+                gui.updateJHexNumberTextColor();
             }
             else {
                 gui.setJDecimalNumber("");
@@ -108,7 +111,7 @@ public class DataFormatConverter {
     public static boolean isNotDigit(char c, int radix){
         char[] charset = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
         String cString = Character.toString(c);
-        if (radix == 64){
+        if (radix == 64){ //Not sure this is right, and are we even doing base64?
             String j = "k" + cString;
             try {
                 Base64.getDecoder().decode(j);
@@ -123,7 +126,7 @@ public class DataFormatConverter {
         else{
             for (int i = 1;i<=radix;i++){
                 if (charset[i-1] == c){
-                    System.out.println("Char c (" + c + ") is within radix");
+                    //System.out.println("Char c (" + c + ") is within radix");
                     return false;
                 }
             }

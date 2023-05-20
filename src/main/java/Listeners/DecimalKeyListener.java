@@ -8,6 +8,14 @@ public class DecimalKeyListener implements KeyListener {
     private static DecimalKeyListener decimalKeyListener;
 
     public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == 9){
+            e.getModifiersEx();
+            Gui.jHexNumber.grabFocus();
+            if (gui.getJDecimalNumber().length() == 0){
+                gui.setJDecimalNumber("");
+            }
+        }
+        gui.updateFromDecimal();
     }
 
     @Override //These arent needed they just kinda need to be here
@@ -16,15 +24,12 @@ public class DecimalKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("Decimal has been pressed");
         gui.updateFromDecimal();
     }
-
 
     public static DecimalKeyListener getInstance() {
         if (decimalKeyListener == null) {
             decimalKeyListener = new DecimalKeyListener();
-
         }
         return decimalKeyListener;
     }

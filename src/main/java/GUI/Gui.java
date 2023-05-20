@@ -11,20 +11,18 @@ import java.awt.event.*;
 import java.net.URI;
 
 public class Gui extends JFrame{
-
     DataFormatConverter dataFormatConverter = new DataFormatConverter();
 
-    private static RoundedTextArea jHexNumber;
-    private static RoundedTextArea jBinaryNumber;
-    private static RoundedTextArea jDecimalNumber;
+    public static RoundedTextArea jHexNumber;
+    public static RoundedTextArea jBinaryNumber;
+    public static RoundedTextArea jDecimalNumber;
 
+    JPanel panel;
 
-
+    public boolean darkMode = true;
 
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-
     private final int WIDTH = round(screenSize.getWidth()*0.2,12);
     private final int HEIGHT = round(400,12);
     private final int BOXHEIGHT = round(screenSize.getHeight()*0.05 ,12);
@@ -39,17 +37,20 @@ public class Gui extends JFrame{
 
 
     private static Gui gui;
-
     static Color primaryColor;
     static Color secondaryColor;
     static Color highlightColor;
     static Color errorColor;
     static Color textColor;
-
     final Font primaryFont = new Font("Roboto", Font.PLAIN, 14);
     final Font highlightFont = new Font("Roboto", Font.BOLD, 14);
-
     final Font titleFont = new Font("Roboto", Font.BOLD, 14);
+    JLabel supportMe = new JLabel("Support me on PayPal");
+    JCheckBox darkModeBox = new JCheckBox("Dark mode");
+
+    JLabel decimalLabel;
+    JLabel binaryLabel;
+    JLabel hexLabel;
 
 
     public static Gui getInstance(){
@@ -61,56 +62,56 @@ public class Gui extends JFrame{
 
     static Border padding = BorderFactory.createEmptyBorder(radius,radius,radius,radius);
 
+    public static Color getTextColor(){
+        return textColor;
+    }
+
+    private void updateColor(RoundedTextArea thingy){
+        thingy.setForeground(textColor);
+        thingy.setBackground(primaryColor);
+        thingy.setCaretColor(textColor);
+    }
 
     public void gui(){
 
-        primaryColor = Color.decode("#FAFAFA");
-        secondaryColor = Color.decode("#DEE3E7");
-        highlightColor = Color.decode("#37474F");
-        textColor = Color.decode("#222222");
-        errorColor = Color.red;
+        errorColor = Color.decode("#BF0000");
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Anto's number format converter");
         this.setResizable(true);
         this.setMinimumSize(new Dimension(250,255));
+        darkModeBox.setSelected(true);
 
 
         jHexNumber = new RoundedTextArea(radius);
         jHexNumber.setFont(primaryFont);
         jHexNumber.setBorder(padding);
-        jHexNumber.setForeground(textColor);
-        jHexNumber.setBackground(primaryColor);
         jHexNumber.setPreferredSize(preferredSize);
+        jHexNumber.setOpaque(true);
 
         jBinaryNumber = new RoundedTextArea(radius);
         jBinaryNumber.setFont(primaryFont);
         jBinaryNumber.setBorder(padding);
-        jBinaryNumber.setForeground(textColor);
-        jBinaryNumber.setBackground(primaryColor);
         jBinaryNumber.setPreferredSize(preferredSize);
+        jBinaryNumber.setOpaque(true);
 
         jDecimalNumber = getjDecimalNumber();
         jDecimalNumber.setFont(primaryFont);
         jDecimalNumber.setBorder(padding);
-        jDecimalNumber.setForeground(textColor);
-        jDecimalNumber.setBackground(primaryColor);
         jDecimalNumber.setPreferredSize(preferredSize);
+        jDecimalNumber.setOpaque(true);
 
-        JLabel hexLabel = new JLabel("Hex value");
+
+        hexLabel = new JLabel("Hex value");
         hexLabel.setFont(titleFont);
         hexLabel.setForeground(textColor);
-        JLabel binaryLabel = new JLabel("Binary value");
+        binaryLabel = new JLabel("Binary value");
         binaryLabel.setFont(titleFont);
         binaryLabel.setForeground(textColor);
-        JLabel decimalLabel = new JLabel("Decimal value");
+        decimalLabel = new JLabel("Decimal value");
         decimalLabel.setFont(titleFont);
         decimalLabel.setForeground(textColor);
-
-
-        JLabel supportMe = new JLabel("Support me on PayPal");
-        supportMe.setForeground(highlightColor);
 
 
         jDecimalNumber.addFocusListener(new FocusListener() {
@@ -118,14 +119,13 @@ public class Gui extends JFrame{
                 jDecimalNumber.addKeyListener(DecimalKeyListener.getInstance());
                 jDecimalNumber.setFont(highlightFont);
                 jDecimalNumber.setForeground(highlightColor);
-                jDecimalNumber.setOpaque(true); //Setting to and from opaque is a super sketch way to make the field change color when you focus it
-
+                //jDecimalNumber.setOpaque(true); //Setting to and from opaque is a super sketch way to make the field change color when you focus it
             }
             public synchronized void focusLost(FocusEvent e) {
                 System.out.println("Focus off decimal");
                 jDecimalNumber.setFont(primaryFont);
                 jDecimalNumber.setForeground(textColor);
-                jDecimalNumber.setOpaque(false);
+                //jDecimalNumber.setOpaque(false);
                 //TODO: ADD GRAB FOCUS WHEN pressing tab
                 //jDecimalNumber.grabFocus();
             }
@@ -135,13 +135,13 @@ public class Gui extends JFrame{
                 jBinaryNumber.addKeyListener(BinaryKeyListener.getInstance());
                 jBinaryNumber.setFont(highlightFont);
                 jBinaryNumber.setForeground(highlightColor);
-                jBinaryNumber.setOpaque(true);
+                //jBinaryNumber.setOpaque(true);
             }
             public void focusLost(FocusEvent e) {
                 System.out.println("Focus off binary");
                 jBinaryNumber.setFont(primaryFont);
                 jBinaryNumber.setForeground(textColor);
-                jBinaryNumber.setOpaque(false);
+                //jBinaryNumber.setOpaque(false);
             }
         });
         jHexNumber.addFocusListener(new FocusListener() {
@@ -149,15 +149,20 @@ public class Gui extends JFrame{
                 jHexNumber.addKeyListener(HexKeyListener.getInstance());
                 jHexNumber.setFont(highlightFont);
                 jHexNumber.setForeground(highlightColor);
-                jHexNumber.setOpaque(true);
+                //jHexNumber.setOpaque(true);
             }
             public void focusLost(FocusEvent e) {
                 System.out.println("Focus off hex");
                 jHexNumber.setFont(primaryFont);
                 jHexNumber.setForeground(textColor);
-                jHexNumber.setOpaque(false);
+                //jHexNumber.setOpaque(false);
 
             }
+        });
+
+        darkModeBox.addActionListener(e -> {
+            darkMode = darkModeBox.isSelected();
+            switchColors();
         });
 
         supportMe.addMouseListener(new MouseAdapter() {
@@ -179,8 +184,7 @@ public class Gui extends JFrame{
                 setCursor(Cursor.getDefaultCursor());
             }
         });
-
-        JPanel panel = new JPanel(new FlowLayout());
+        panel = new JPanel(new FlowLayout());
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
         layout.setAutoCreateGaps(false);
@@ -195,7 +199,9 @@ public class Gui extends JFrame{
                                 .addComponent(jBinaryNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(decimalLabel)
                                 .addComponent(jDecimalNumber, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(darkModeBox,GroupLayout.Alignment.LEADING)
                                 .addComponent(supportMe, GroupLayout.Alignment.TRAILING)
+
                         )
         );
         layout.setVerticalGroup(
@@ -210,17 +216,47 @@ public class Gui extends JFrame{
                                 .addComponent(decimalLabel)
                                 .addComponent(jDecimalNumber, 12, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(14)
-                                .addComponent(supportMe,12,GroupLayout.DEFAULT_SIZE,14)
+
+                                .addGroup(layout.createBaselineGroup(true,false)
+                                        .addComponent(darkModeBox,12,GroupLayout.DEFAULT_SIZE,14)
+                                        .addComponent(supportMe,12,GroupLayout.DEFAULT_SIZE,14)
+                                )
                         )
-
-
         ;
+
+        this.add(panel);
+        switchColors();
+        this.setVisible(true);
+
+    }
+
+    private void switchColors() {
+
+        if (darkMode){
+            primaryColor = Color.decode("#2D2F31");
+            secondaryColor = Color.decode("#1F1F1F");
+            highlightColor = Color.decode("#E3E3E3");
+            textColor = Color.decode("#E3E3E3");
+        } else {
+            primaryColor = Color.decode("#DEE3E7");
+            secondaryColor = Color.decode("#FAFAFA");
+            highlightColor = Color.decode("#37474F");
+            textColor = Color.decode("#222222");
+        }
+
+        updateColor(jHexNumber);
+        updateColor(jBinaryNumber);
+        updateColor(jDecimalNumber);
+
+        supportMe.setForeground(highlightColor);
+        darkModeBox.setForeground(textColor);
+        darkModeBox.setBackground(secondaryColor);
 
         panel.setBackground(secondaryColor);
 
-        this.add(panel);
-        this.setVisible(true);
-
+        hexLabel.setForeground(textColor);
+        binaryLabel.setForeground(textColor);
+        decimalLabel.setForeground(textColor);
     }
 
     private RoundedTextArea getjDecimalNumber() {
@@ -275,5 +311,15 @@ public class Gui extends JFrame{
     }
     public void setJDecimalNumber(Color color){
         jDecimalNumber.setForeground(color);
+    }
+
+    public void updateJHexNumberTextColor(){
+        jHexNumber.setForeground(textColor);
+    }
+    public void updateJBinaryNumberTextColor(){
+        jBinaryNumber.setForeground(textColor);
+    }
+    public void updateJDecimalNumberTextColor(){
+        jDecimalNumber.setForeground(textColor);
     }
 }

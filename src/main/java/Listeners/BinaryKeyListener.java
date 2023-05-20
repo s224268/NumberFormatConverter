@@ -8,6 +8,14 @@ public class BinaryKeyListener implements KeyListener {
     private static BinaryKeyListener binaryKeyListener;
 
     public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar() == 9){
+            e.getModifiersEx();
+            Gui.jDecimalNumber.grabFocus();
+            if (gui.getJBinaryNumber().length() == 0){
+                gui.setJBinaryNumber("");
+            }
+        }
+        gui.updateFromBinary();
     }
 
     @Override //These arent needed they just kinda need to be here
@@ -15,10 +23,8 @@ public class BinaryKeyListener implements KeyListener {
     }
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("Binary has been pressed");
         gui.updateFromBinary();
     }
-
 
     public static BinaryKeyListener getInstance() {
         if (binaryKeyListener == null) {
