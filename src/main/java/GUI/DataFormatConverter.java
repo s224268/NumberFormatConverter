@@ -10,6 +10,8 @@ public class DataFormatConverter {
     static Gui gui = Gui.getInstance();
     static Color textColor = gui.getTextColor();
 
+    static boolean twosCompliment = true;
+
     public void updateFromDecimal(){
         String text = gui.getJDecimalNumber();
         boolean foundMistake = false;
@@ -28,6 +30,8 @@ public class DataFormatConverter {
             if (!Objects.equals(text, "")){
                 BigInteger value = new BigInteger(text,10);
                 String binary = value.toString(2);
+                //TODO
+
                 String hexValue = value.toString(16).toUpperCase();
                 gui.setJHexNumber(hexValue);
                 gui.setJBinaryNumber(binary);
@@ -36,7 +40,7 @@ public class DataFormatConverter {
                 gui.updateJHexNumberTextColor();
             }
             else {
-                gui.setJDecimalNumber("");
+                gui.setJHexNumber("");
                 gui.setJBinaryNumber("");
             }
         }
@@ -80,7 +84,17 @@ public class DataFormatConverter {
         text = text.toUpperCase();
         boolean foundMistake = false;
         char[] tempArray = text.toCharArray();
-        for (int i = 0; i<text.length();i++){
+        int i = 0;
+        try {
+            if (tempArray[0] == '-'){
+                System.out.println("negative number");
+                i = 1;
+            }
+        } catch (ArrayIndexOutOfBoundsException e){
+            //ignore;
+        }
+
+        for (; i<text.length();i++){
             if (isNotDigit(tempArray[i], 16)){
                 foundMistake = true;
                 break;
@@ -91,9 +105,12 @@ public class DataFormatConverter {
         }
         else{
             gui.setJHexNumber(textColor);
-            if (!Objects.equals(text, "")){
+            if (!Objects.equals(text, "") && !Objects.equals(text, "-")){
                 BigInteger value = new BigInteger(text,16);
                 String binary = value.toString(2);
+                if (twosCompliment){ //TODO: ADD THIS TO OTHER CONVERTERS
+                    binary = findTwoscomplement(new StringBuffer(binary));
+                }
                 String decimalValue = value.toString(10);
                 gui.setJDecimalNumber(decimalValue);
                 gui.setJBinaryNumber(binary);
@@ -133,5 +150,36 @@ public class DataFormatConverter {
             System.out.println("Char c " + c + "is not within radix");
             return true;
         }
+    }
+
+    static String findTwoscomplement(StringBuffer str)
+    {
+        int n = str.length();
+
+        // Traverse the string to get first '1' from
+        // the last of string
+        int i;
+        for (i = n-1 ; i >= 0 ; i--)
+            if (str.charAt(i) == '1')
+                break;
+
+        // If there exists no '1' concat 1 at the
+        // starting of string
+        if (i == -1)
+            return "1" + str;
+
+        // Continue traversal after the position of
+        // first '1'
+        for (int k = i-1 ; k >= 0; k--)
+        {
+            //Just flip the values
+            if (str.charAt(k) == '1')
+                str.replace(k, k+1, "0");
+            else
+                str.replace(k, k+1, "1");
+        }
+
+        // return the modified string
+        return str.toString();
     }
 }

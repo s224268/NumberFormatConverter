@@ -227,6 +227,9 @@ public class Gui extends JFrame{
         this.add(panel);
         switchColors();
         this.setVisible(true);
+        jDecimalNumber.setText("255");
+        jHexNumber.setText("FF");
+        jBinaryNumber.setText("11111111");
 
     }
 
